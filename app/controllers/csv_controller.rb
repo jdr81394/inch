@@ -1,31 +1,35 @@
 class CsvController < ApplicationController
-    def import_csv
-        # file_path = ''      # add in this path
+
+
+    def import_csv_manually
         file = params[:csv_file]
         file_name = file.original_filename
 
-        puts "Original Filename: #{file_name}"
-
-        # Remove the ".csv" extension
-        filename_without_extension = File.basename(file_name, File.extname(file_name)).downcase
-
-        # Now you can use the filename without the ".csv" extension
-        puts "Filename without extension: #{filename_without_extension}"
-
-        if filename_without_extension == "building" ||  filename_without_extension == "buildings"
-            puts "In building"
-            CsvImportService.new(file, Building).import
+        if file_name.include?("building")
+            CsvImportService.new(file, Building).manualImport
         
-        elsif filename_without_extension == "people" 
-            puts "In person"
-            CsvImportService.new(file, Person).import
-        
+        elsif file_name.include?("people") || file_name.include?("person") 
+            CsvImportService.new(file, Person).manualImport        
         else 
-            puts "There was no model matching: #{filename_without_extension}"
+            puts "There was no model matching: #{file_name}"
         end 
 
-        #  message
-        redirect_to root_path, notice: 'CSV import completed successfully.'
+        redirect_to root_path, notice: 'Manual CSV import completed successfully.'
+    end
 
+    def import_csv
+        file = params[:csv_file]
+        file_name = file.original_filename
+
+        if file_name.include?("building")
+            CsvImportService.new(file, Building).import
+        
+        elsif file_name.include?("people") || file_name.include?("person") 
+            CsvImportService.new(file, Person).import        
+        else 
+            puts "There was no model matching: #{file_name}"
+        end 
+
+        redirect_to root_path, notice: 'CSV import completed successfully.'
     end
 end

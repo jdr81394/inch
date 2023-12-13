@@ -12,5 +12,6 @@ Rails.application.routes.draw do
   # root "posts#index"
   # csv#import_csv - csv doesn't need the contorller part
   post '/import_csv', to: 'csv#import_csv'
-  get '/test', to: 'csv#import_csv'
+  post '/import_csv_manually', to: 'csv#import_csv_manually'
+
 end

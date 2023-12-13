@@ -8,6 +8,9 @@ Bundler.require(*Rails.groups)
 
 module Inch
   class Application < Rails::Application
+    
+    config.active_record.yaml_column_permitted_classes = [Symbol, Date, Time, ActiveSupport::TimeWithZone, ActiveSupport::TimeZone]
+
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.1
 

@@ -2,3 +2,11 @@
     <%= form.file_field :csv_file %>
     <%= form.submit 'Import CSV' %>
   <% end %>
+
+
+
+  <%= form_with(url: import_csv_manually_path, method: :post, local: true, multipart: true) do |form| %>
+    <%= form.file_field :csv_file %>
+    <%= form.submit 'Manually import CSV' %>
+  <% end %>
+
